@@ -13,6 +13,8 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     var imageAdapter = ImageAdapter(mutableListOf())
     var page = 1
+    var num = 10
+    var perPage = 10
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
                     if (!recyclerView.canScrollVertically(1)) {
-                        ++page
+                        perPage += num
                         doRequesss()
                     }
                 }
@@ -43,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun ActivityMainBinding.doRequesss() {
-        App.api.getImages(keyWord = keyWordEd.text.toString(), page = page)
+        App.api.getImages(keyWord = keyWordEd.text.toString(), page = page, perPage = perPage)
             .enqueue(object : Callback<PixaModel> {
                 override fun onResponse(
                     call: Call<PixaModel>,
