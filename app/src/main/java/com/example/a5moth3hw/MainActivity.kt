@@ -11,10 +11,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
-    var imageAdapter = ImageAdapter(mutableListOf())
+    var imageAdapter = ImageAdapter(arrayListOf())
     var page = 1
-    var num = 10
-    var perPage = 10
+    var num = 30
+    var perPage = 30
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +52,11 @@ class MainActivity : AppCompatActivity() {
                     response: Response<PixaModel>
                 ) {
                     if (response.code() == 200) {
-                        imageAdapter = ImageAdapter(response.body()?.hits!!)
+                        val list = arrayListOf<ImageModel>()
+                        response.body()?.hits?.forEach{
+                       imageAdapter.addImage(it)
+
+                        }
                         binding.recyclerView.adapter = imageAdapter
                     }
                 }

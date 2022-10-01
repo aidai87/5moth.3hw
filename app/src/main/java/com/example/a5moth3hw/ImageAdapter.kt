@@ -7,15 +7,23 @@ import coil.load
 import com.example.a5moth3hw.databinding.ActivityMainBinding
 import com.example.a5moth3hw.databinding.ItemImageBinding
 
-class ImageAdapter(private val list:List<ImageModel>): RecyclerView.Adapter<ImageAdapter.ImageViewHolder> () {
-    class ImageViewHolder(private val binding: ItemImageBinding):
+class ImageAdapter(private val list:ArrayList<ImageModel>):
+    RecyclerView.Adapter<ImageAdapter.ImageViewHolder> () {
+    class ImageViewHolder(private val binding: ItemImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(imageModel: ImageModel) {
 
-binding.imageView.load(imageModel.largeImageURL)
+            binding.imageView.load(imageModel.largeImageURL)
         }
 
     }
+
+
+       fun addImage(imageModel: ImageModel){
+           list.add(imageModel)
+           notifyDataSetChanged()
+
+}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         return ImageViewHolder(
